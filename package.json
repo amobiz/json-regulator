@@ -1,0 +1,43 @@
+{
+  "name": "json-regulator",
+  "version": "0.1.0",
+  "description": "Promote and/or eliminate specified properties of a JSON value.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amobiz/json-regulator.git"
+  },
+  "keywords": [
+    "json",
+    "json regulate",
+    "json regulator",
+    "assign",
+    "assign deep",
+    "deep",
+    "regulate",
+    "regulator",
+    "property",
+    "properties",
+    "adjust",
+    "adjustment",
+    "configuration",
+    "configurations"
+  ],
+  "author": "Amobiz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/amobiz/json-regulator/issues"
+  },
+  "homepage": "https://github.com/amobiz/json-regulator#readme",
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "mocha": "^2.3.4",
+    "mocha-cases": "^0.1.5"
+  },
+  "dependencies": {
+    "mixin-deep": "^1.1.3"
+  }
+}
