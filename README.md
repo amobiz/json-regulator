@@ -1,5 +1,5 @@
 # json-regulator
-Promote and/or eliminate specified properties of a JSON value.
+Manage conditional configurations by promoting and/or eliminating specific properties of a JSON value.
 
 ## Install
 ``` bash
