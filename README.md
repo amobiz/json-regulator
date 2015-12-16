@@ -1,5 +1,5 @@
 # json-regulator
-Manage conditional configurations by promoting and/or eliminating specific properties of a JSON value.
+Manage conditional configurations by promoting and/or eliminating specific properties of a JSON value object.
 
 ## Install
 ``` bash
@@ -9,12 +9,12 @@ npm install json-regulator
 ## API
 
 ### `regulate(values, promotions, eliminations)`
-For given JSON values object, promote keys in promotions array up one level and eliminate keys in promotions and eliminations array.
+For given JSON value object `values`, promote keys in `promotions` array up one level and then eliminate keys in both `promotions` and `eliminations` array.
 #### Context
 Don't care.
 #### Parameters
 ##### `values`
-The object needs to regulate.
+The JSON value object needs to regulate.
 ##### `promotions`
 An array of keys to promote.
 ##### `eliminations`
@@ -81,7 +81,7 @@ var values = {
 values = regulate(values, promotions, eliminations);
 ```
 
-Outout:
+Output:
 ``` javascript
 {
     src: 'src',
