@@ -1,6 +1,6 @@
 {
   "name": "json-regulator",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Promote and/or eliminate specified properties of a JSON value.",
   "main": "index.js",
   "scripts": {
