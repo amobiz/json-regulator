@@ -28,71 +28,72 @@ var regulate = require('json-regulator');
 var promotions = ['production', 'prod'];
 var eliminations = ['development', 'dev'];
 var values = {
-	src: 'src',
-	dest: 'dist',
-	options: {
-		debug: false,
-		override: false,
-		development: {
-			sourcemap: 'internal'
-		},
-		dev: {
-			override: true
-		},
-		production: {
-			sourcemap: 'external'
-		},
-		prod: {
-			override: false
-		}
-	},
-	development: {
-		src: 'app',
-		options: {
-			debug: true
-		}
-	},
-	dev: {
-		dest: 'build',
-		options: {
-			override: 'auto'
-		},
-		settings: {
-			expose: 'regulator'
-		}
-	},
-	production: {
-		src: 'src',
-		options: {
-			debug: false
-		}
-	},
-	prod: {
-		dest: 'dist',
-		options: {
-			override: 'smart'
-		},
-		settings: {
-			expose: 'regulator-release'
-		}
-	}
+    src: 'src',
+    dest: 'dist',
+    options: {
+        debug: false,
+        override: false,
+        development: {
+            sourcemap: 'internal'
+        },
+        dev: {
+            override: true
+        },
+        production: {
+            sourcemap: 'external'
+        },
+        prod: {
+            override: false
+        }
+    },
+    development: {
+        src: 'app',
+        options: {
+            debug: true
+        }
+    },
+    dev: {
+        dest: 'build',
+        options: {
+            override: 'auto'
+        },
+        settings: {
+            expose: 'regulator'
+        }
+    },
+    production: {
+        src: 'src',
+        options: {
+            debug: false
+        }
+    },
+    prod: {
+        dest: 'dist',
+        options: {
+            override: 'smart'
+        },
+        settings: {
+            expose: 'regulator-release'
+        }
+    }
 };
 
 values = regulate(values, promotions, eliminations);
 ```
+
 Outout:
 ``` javascript
 {
-	src: 'src',
-	dest: 'dist',
-	options: {
-		debug: false,
-		override: 'smart',
-		sourcemap: 'external'
-	},
-	settings: {
-		expose: 'regulator-release'
-	}
+    src: 'src',
+    dest: 'dist',
+    options: {
+        debug: false,
+        override: 'smart',
+        sourcemap: 'external'
+    },
+    settings: {
+        expose: 'regulator-release'
+    }
 }
 ```
 
