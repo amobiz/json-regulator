@@ -2,7 +2,7 @@
 Promote and/or eliminate specified properties of a JSON value.
 
 ## Install
-```
+``` bash
 npm install json-regulator
 ```
 
@@ -22,7 +22,7 @@ An array of keys to eliminate.
 #### Returns
 The regulated value.
 #### Example
-```
+``` javascript
 var regulate = require('json-regulator');
 
 var promotions = ['production', 'prod'];
@@ -81,7 +81,7 @@ var values = {
 values = regulate(values, promotions, eliminations);
 ```
 Outout:
-```
+``` javascript
 {
 	src: 'src',
 	dest: 'dist',
@@ -96,8 +96,12 @@ Outout:
 }
 ```
 
-## Related
+## Test
+``` bash
+$ npm test
+```
 
+## Related
  * [json-normalizer](https://www.npmjs.com/package/json-normalizer)
 
 ## License
