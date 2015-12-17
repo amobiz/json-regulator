@@ -142,8 +142,8 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     doif = require('gulp-if'),
     sourcemaps = require('gulp-sourcemaps'),
-    util = require('gulp-util'),
-    uglify = require('gulp-uglify');
+    uglify = require('gulp-uglify'),
+    util = require('gulp-util');
 
 if (util.env.dev) {
     config = regulate(config, development, production);
