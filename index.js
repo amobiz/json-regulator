@@ -5,12 +5,16 @@ var assign = require('mixin-deep');
 function regulate(values, promotions, eliminations) {
 	promotions = promotions || [];
 	eliminations = eliminations || [];
-	return _regulate(values) || values;
+	return _regulate(values);
 
 	function _regulate(values) {
+		if (Array.isArray(values)) {
+			return values.map(_regulate);
+		}
 		if (isObject(values)) {
 			return _eliminate(_promote(values));
 		}
+		return values;
 	}
 
 	function _promote(values) {
@@ -19,12 +23,12 @@ function regulate(values, promotions, eliminations) {
 
 		function _property(key) {
 			var value = values[key];
-			_promoted() || _regulate(value);
+			_promoted(value) || (values[key] = _regulate(value));
 
-			function _promoted() {
-				if (promotions.indexOf(key) !== -1) {
+			function _promoted(value) {
+				if (includes(promotions, key) && isObject(value)) {
 					delete values[key];
-					assign(values, _regulate(value) || {});
+					assign(values, _regulate(value));
 					return true;
 				}
 			}
@@ -48,8 +52,17 @@ function regulate(values, promotions, eliminations) {
 	}
 }
 
-function isObject(target) {
-	return !!target && typeof target === 'object' && !Array.isArray(target);
+
+function isString(value) {
+	return typeof value === 'string';
+}
+
+function isObject(value) {
+	return !!value && typeof value === 'object' && !Array.isArray(value);
+}
+
+function includes(array, value) {
+	return array.indexOf(value) !== -1;
 }
 
 module.exports = regulate;

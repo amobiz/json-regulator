@@ -5,7 +5,7 @@ var test = require('mocha-cases');
 var regulate = require('../');
 
 var cases = [{
-	name: 'should accept empty value: values and return as is: {value.values}, promotions: {value.promotions} and eliminations: {value.eliminations}',
+	name: 'should accept empty value and return as is: {value.values}, promotions: {value.promotions} and eliminations: {value.eliminations}',
 	values: [{
 		values: {},
 		promotions: [],
@@ -190,6 +190,93 @@ var cases = [{
 			expose: 'regulator'
 		}
 	}
+
+}, {
+	name: 'should accept array values and process recursively into its object items',
+	values: [{
+		values: [],
+		promotions: ['development', 'dev'],
+		eliminations: []
+	}, {
+		values: [1, '2'],
+		promotions: ['development', 'dev'],
+		eliminations: []
+	}, {
+		values: [[], [1], [1, '2']],
+		promotions: ['development', 'dev'],
+		eliminations: []
+	}, {
+		values: [{
+			dev: {
+				debug: true
+			},
+			development: [{
+				debug: false
+			}]
+		}, [
+			'dev', 'development'
+		]],
+		promotions: ['development', 'dev'],
+		eliminations: []
+	}],
+	expected: [
+		[],
+		[1, '2'],
+		[[], [1], [1, '2']],
+		[{
+			debug: true,
+			development: [{
+				debug: false
+			}]
+		}, [
+			'dev', 'development'
+		]]
+	]
+}, {
+	name: 'should never touch non-object values',
+	values: [{
+		values: [1, '2', true, null],
+		promotions: ['development', 'dev'],
+		eliminations: []
+	}, {
+		values: [{
+			dev: 1
+		}, {
+			dev: '2'
+		}, {
+			dev: true
+		}, {
+			dev: null
+		}, {
+			dev: undefined
+		}, {
+			dev: [1, '2', true, null]
+		}, {
+			dev: {
+				object: true
+			}
+		}],
+		promotions: ['development', 'dev'],
+		eliminations: []
+	}],
+	expected: [
+		[1, '2', true, null],
+		[{
+			dev: 1
+		}, {
+			dev: '2'
+		}, {
+			dev: true
+		}, {
+			dev: null
+		}, {
+			dev: undefined
+		}, {
+			dev: [1, '2', true, null]
+		}, {
+			object: true
+		}]
+	]
 }, {
 	name: 'should remove elimination values',
 	value: {
