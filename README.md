@@ -28,14 +28,18 @@ var regulate = require('json-regulator');
 var production = ['production', 'prod'];
 var development = ['development', 'dev'];
 var config = {
-    src: 'src/',
     dev: {
         description: 'development build',
+        src: 'src/',
         dest: 'build/',
         release: false
+        src: 'src/',
+        dest: 'build/'
     },
     prod: {
         description: 'production build',
+        release: true,
+        src: 'src/',
         dest: 'dist/',
         release: true,
         sourcemaps: {
@@ -145,6 +149,12 @@ var gulp = require('gulp'),
     uglify = require('gulp-uglify'),
     util = require('gulp-util');
 
+var production = ['production', 'prod'];
+var development = ['development', 'dev'];
+var config = {
+    // ...
+};
+
 if (util.env.dev) {
     config = regulate(config, development, production);
 } else {
@@ -170,6 +180,18 @@ $ gulp --dev scripts
 ``` bash
 $ npm test
 ```
+
+## Change Log
+
+* 2015/12/18 - 0.1.8
+
+    * Feature: also process objects inside array values recursively.
+    * Feature: allow type of `promotions` and `eliminations` argument to be `string`, instead of array of strings.
+    * Enhance: returns a new JSON value object, rather then modifying it directly.
+
+* 2015/12/15 - 0.1.0
+
+    * First release.
 
 ## Related
  * [json-normalizer](https://www.npmjs.com/package/json-normalizer)
