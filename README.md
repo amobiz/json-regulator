@@ -139,11 +139,11 @@ Generates:
 For sample usage, if you are using gulp, you can do this:
 ``` javascript
 var gulp = require('gulp'),
-    util = require('gulp-util'),
     concat = require('gulp-concat'),
-    sourcemaps = require('gulp-sourcemaps'),
     doif = require('gulp-if'),
-    uglify = require('uglify');
+    sourcemaps = require('gulp-sourcemaps'),
+    util = require('gulp-util'),
+    uglify = require('gulp-uglify');
 
 if (util.env.dev) {
     config = regulate(config, development, production);
