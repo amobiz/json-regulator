@@ -153,9 +153,9 @@ if (util.env.dev) {
 
 gulp.task('scripts', function () {
     return gulp.src(config.src + config.scripts.src)
-        .pipe(sourcemaps.init())
+        .pipe(doif(config.sourcemaps, sourcemaps.init()))
         .pipe(doif(config.release, uglify()))
-        .pipe(doif(config.release, concat(config.scripts.bundle))
+        .pipe(doif(config.release, concat(config.scripts.bundle)))
         .pipe(doif(config.sourcemaps, sourcemaps.write(config.dest + config.sourcemaps.dest)))
         .pipe(gulp.dest(config.dest));
 });
