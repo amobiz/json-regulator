@@ -28,40 +28,34 @@ function regulate(values, promotions, eliminations) {
 	}
 
 	function _promote(values) {
-		Object.keys(values).forEach(_property);
-		return values;
+		return _each(values, __promote);
 
-		function _property(key) {
-			var value = values[key];
-			_promoted(value) || (values[key] = _regulate(value));
-
-			function _promoted(value) {
-				if (includes(promotions, key) && isObject(value)) {
-					delete values[key];
-					assign(values, _regulate(value));
-					return true;
-				}
+		function __promote(value, key, result) {
+			if (includes(promotions, key) && isObject(value)) {
+				assign(result, _regulate(value));
+				return true;
 			}
 		}
 	}
 
 	function _eliminate(values) {
-		Object.keys(values).forEach(_property);
-		return values;
+		return _each(values, __eliminate);
 
-		function _property(name) {
-			_eliminated() || _regulate(values[name]);
+		function __eliminate(value, key) {
+			return includes(eliminations, key)
+		}
+	}
 
-			function _eliminated() {
-				if (eliminations.indexOf(name) !== -1) {
-					delete values[name];
-					return true;
-				}
-			}
+	function _each(values, fn) {
+		return Object.keys(values).reduce(_property, {});
+
+		function _property(result, key) {
+			var value = values[key];
+			fn(value, key, result) || (result[key] = _regulate(value));
+			return result;
 		}
 	}
 }
-
 
 function isString(value) {
 	return typeof value === 'string';
