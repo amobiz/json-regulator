@@ -1,5 +1,5 @@
 # json-regulator
-Manage conditional configurations by promoting and/or eliminating specific keys of a JSON value object.
+Manages conditional configurations by promoting and/or eliminating specific keys of a JSON value object.
 
 ## Install
 ``` bash
@@ -9,18 +9,18 @@ npm install json-regulator
 ## API
 
 ### `regulate(values, promotions, eliminations)`
-For given JSON value object `values`, promote keys in `promotions` array up one level and then eliminate keys in both `promotions` and `eliminations` arrays.
+For given JSON value object `values`, returns a new JSON value object, that promotes keys in `promotions` array one level up, and eliminats keys in both `promotions` and `eliminations` arrays.
 #### Context
 Don't care.
 #### Parameters
 ##### `values`
 The JSON value object needs to regulate.
 ##### `promotions`
-An array of keys to promote.
+Key or array of keys to promote.
 ##### `eliminations`
-An array of keys to eliminate.
+Key or array of keys to eliminate.
 #### Returns
-The regulated value.
+A new regulated JSON value object.
 #### Example
 ``` javascript
 var regulate = require('json-regulator');
@@ -28,20 +28,17 @@ var regulate = require('json-regulator');
 var production = ['production', 'prod'];
 var development = ['development', 'dev'];
 var config = {
-    dev: {
+    development: {
         description: 'development build',
-        src: 'src/',
-        dest: 'build/',
-        release: false
+        release: false,
         src: 'src/',
         dest: 'build/'
     },
-    prod: {
+    production: {
         description: 'production build',
         release: true,
         src: 'src/',
         dest: 'dist/',
-        release: true,
         sourcemaps: {
             dest: 'maps/'
         }
@@ -91,10 +88,10 @@ config = regulate(config, production, development);
 Generates:
 ``` javascript
 {
-    src: 'src/',
     description: 'production build',
-    dest: 'dist/',
     release: true,
+    src: 'src/',
+    dest: 'dist/',
     sourcemaps: {
         dest: 'maps/'
     },
@@ -122,10 +119,10 @@ config = regulate(config, development, production);
 Generates:
 ``` javascript
 {
-    src: 'src/',
     description: 'development build',
-    dest: 'build/',
     release: false
+    src: 'src/',
+    dest: 'build/',
     scripts: {
         src: '**/*.js',
         options: {
@@ -140,7 +137,8 @@ Generates:
     }}
 ```
 
-For sample usage, if you are using gulp, you can do this:
+## Sample Usage
+If you are using gulp, you can enable conditional build with conditional configurations.
 ``` javascript
 var gulp = require('gulp'),
     concat = require('gulp-concat'),
@@ -171,7 +169,7 @@ gulp.task('scripts', function () {
 });
 ```
 
-Run in cli:
+Run gulp:
 ``` javascript
 $ gulp --dev scripts
 ```
@@ -183,7 +181,7 @@ $ npm test
 
 ## Change Log
 
-* 2015/12/18 - 0.1.8
+* 2015/12/18 - 0.1.9
 
     * Feature: also process objects inside array values recursively.
     * Feature: allow type of `promotions` and `eliminations` argument to be `string`, instead of array of strings.
