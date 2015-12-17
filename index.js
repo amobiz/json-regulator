@@ -7,16 +7,6 @@ function regulate(values, promotions, eliminations) {
 	eliminations = _arrayify(eliminations);
 	return _regulate(values);
 
-	function _arrayify(value) {
-		if (Array.isArray(value)) {
-			return value;
-		}
-		if (isString(value)) {
-			return [value];
-		}
-		return [];
-	}
-
 	function _regulate(values) {
 		if (Array.isArray(values)) {
 			return values.map(_regulate);
@@ -55,6 +45,16 @@ function regulate(values, promotions, eliminations) {
 			return result;
 		}
 	}
+}
+
+function _arrayify(value) {
+	if (Array.isArray(value)) {
+		return value;
+	}
+	if (isString(value)) {
+		return [value];
+	}
+	return [];
 }
 
 function isString(value) {
