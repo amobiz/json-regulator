@@ -25,76 +25,145 @@ The regulated value.
 ``` javascript
 var regulate = require('json-regulator');
 
-var promotions = ['production', 'prod'];
-var eliminations = ['development', 'dev'];
-var values = {
-    src: 'src',
-    dest: 'dist',
-    options: {
-        debug: false,
-        override: false,
+var production = ['production', 'prod'];
+var development = ['development', 'dev'];
+var config = {
+    src: 'src/',
+    dev: {
+        description: 'development build',
+        dest: 'build/',
+        release: false
+    },
+    prod: {
+        description: 'production build',
+        dest: 'dist/',
+        release: true,
+        sourcemaps: {
+            dest: 'maps/'
+        }
+    },
+    scripts: {
+        src: '**/*.js',
+        prod: {
+            bundle: 'bundle.js'
+        },
+        options: {
+            debug: false,
+            dev: {
+                debug: true
+            }
+        }
+    },
+    deploy: {
         development: {
-            sourcemap: 'internal'
+            settings: {
+                'log-level': 'info'
+            }
         },
         dev: {
-            override: true
+            settings: {
+                overwrite: 'force'
+            }
         },
         production: {
-            sourcemap: 'external'
+            settings: {
+                'log-level': 'warning'
+            }
         },
         prod: {
-            override: false
+            settings: {
+                overwrite: 'auto'
+            }
         }
+    }
+};
+```
+
+With the call:
+``` javascript
+config = regulate(config, production, development);
+```
+
+Generates:
+``` javascript
+{
+    src: 'src/',
+    description: 'production build',
+    dest: 'dist/',
+    release: true,
+    sourcemaps: {
+        dest: 'maps/'
     },
-    development: {
-        src: 'app',
-        options: {
-            debug: true
-        }
-    },
-    dev: {
-        dest: 'build',
-        options: {
-            override: 'auto'
-        },
-        settings: {
-            expose: 'regulator'
-        }
-    },
-    production: {
-        src: 'src',
+    scripts: {
+        src: '**/*.js',
+        bundle: 'bundle.js',
         options: {
             debug: false
         }
     },
-    prod: {
-        dest: 'dist',
-        options: {
-            override: 'smart'
-        },
+    deploy: {
         settings: {
-            expose: 'regulator-release'
+            'log-level': 'warning',
+            overwrite: 'auto'
         }
     }
-};
-
-values = regulate(values, promotions, eliminations);
+}
 ```
 
-Output:
+And with the call:
+``` javascript
+config = regulate(config, development, production);
+```
+
+Generates:
 ``` javascript
 {
-    src: 'src',
-    dest: 'dist',
-    options: {
-        debug: false,
-        override: 'smart',
-        sourcemap: 'external'
+    src: 'src/',
+    description: 'development build',
+    dest: 'build/',
+    release: false
+    scripts: {
+        src: '**/*.js',
+        options: {
+            debug: true
+        }
     },
-    settings: {
-        expose: 'regulator-release'
-    }
+    deploy: {
+        settings: {
+            'log-level': 'info',
+            overwrite: 'force'
+        }
+    }}
+```
+
+For sample usage, if you are using gulp, you can do this:
+``` javascript
+var gulp = require('gulp'),
+    util = require('gulp-util'),
+    concat = require('gulp-concat'),
+    sourcemaps = require('gulp-sourcemaps'),
+    doif = require('gulp-if'),
+    uglify = require('uglify');
+
+if (util.env.dev) {
+    config = regulate(config, development, production);
+} else {
+    config = regulate(config, production, development);
 }
+
+gulp.task('scripts', function () {
+    return gulp.src(config.src + config.scripts.src)
+        .pipe(sourcemaps.init())
+        .pipe(doif(config.release, uglify()))
+        .pipe(doif(config.release, concat(config.scripts.bundle))
+        .pipe(doif(config.sourcemaps, sourcemaps.write(config.dest + config.sourcemaps.dest)))
+        .pipe(gulp.dest(config.dest));
+});
+```
+
+Run in cli:
+``` javascript
+$ gulp --dev scripts
 ```
 
 ## Test
