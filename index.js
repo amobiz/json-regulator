@@ -3,9 +3,19 @@
 var assign = require('mixin-deep');
 
 function regulate(values, promotions, eliminations) {
-	promotions = promotions || [];
-	eliminations = eliminations || [];
+	promotions = _arrayify(promotions);
+	eliminations = _arrayify(eliminations);
 	return _regulate(values);
+
+	function _arrayify(value) {
+		if (Array.isArray(value)) {
+			return value;
+		}
+		if (isString(value)) {
+			return [value];
+		}
+		return [];
+	}
 
 	function _regulate(values) {
 		if (Array.isArray(values)) {

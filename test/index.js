@@ -345,6 +345,62 @@ var cases = [{
 			expose: 'regulator-release'
 		}
 	}
+}, {
+	name: 'should accept promotions and eliminations argument as string',
+	value: {
+		values: {
+			src: 'src',
+			dest: 'dist',
+			options: {
+				debug: false,
+				override: false,
+				dev: {
+					sourcemap: 'internal',
+					override: true
+				},
+				prod: {
+					sourcemap: 'external',
+					override: false
+				}
+			},
+			dev: {
+				src: 'app',
+				dest: 'build',
+				options: {
+					debug: true,
+					override: 'auto'
+				},
+				settings: {
+					expose: 'regulator'
+				}
+			},
+			prod: {
+				src: 'src',
+				dest: 'dist',
+				options: {
+					debug: false,
+					override: 'smart'
+				},
+				settings: {
+					expose: 'regulator-release'
+				}
+			}
+		},
+		promotions: 'prod',
+		eliminations: 'dev'
+	},
+	expected: {
+		src: 'src',
+		dest: 'dist',
+		options: {
+			debug: false,
+			override: 'smart',
+			sourcemap: 'external'
+		},
+		settings: {
+			expose: 'regulator-release'
+		}
+	}
 }];
 
 describe('regulate()', function () {
