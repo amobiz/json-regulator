@@ -147,11 +147,11 @@ var gulp = require('gulp'),
     uglify = require('gulp-uglify'),
     util = require('gulp-util');
 
-var production = ['production', 'prod'];
-var development = ['development', 'dev'];
-var config = {
-    // ...
-};
+var production = ['production', 'prod'],
+    development = ['development', 'dev'],
+    config = {
+        // ...
+    };
 
 if (util.env.dev) {
     config = regulate(config, development, production);
