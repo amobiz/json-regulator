@@ -2,10 +2,12 @@
 
 var assign = require('mixin-deep');
 
-function regulate(values, promotions, eliminations) {
-	promotions = _arrayify(promotions);
-	eliminations = _arrayify(eliminations);
-	return _regulate(values);
+function regulate(anyValues, anyPromotions, anyEliminations) {
+	var eliminations, promotions;
+
+	promotions = _arrayify(anyPromotions);
+	eliminations = _arrayify(anyEliminations);
+	return _regulate(anyValues);
 
 	function _regulate(values) {
 		if (Array.isArray(values)) {
@@ -32,7 +34,7 @@ function regulate(values, promotions, eliminations) {
 		return _each(values, __eliminate);
 
 		function __eliminate(value, key) {
-			return includes(eliminations, key)
+			return includes(eliminations, key);
 		}
 	}
 
@@ -40,8 +42,12 @@ function regulate(values, promotions, eliminations) {
 		return Object.keys(values).reduce(_property, {});
 
 		function _property(result, key) {
-			var value = values[key];
-			fn(value, key, result) || (result[key] = _regulate(value));
+			var value;
+
+			value = values[key];
+			if (!fn(value, key, result)) {
+				(result[key] = _regulate(value));
+			}
 			return result;
 		}
 	}

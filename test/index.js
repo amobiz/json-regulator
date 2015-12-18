@@ -1,3 +1,4 @@
+/* eslint no-undefined: 0 */
 'use strict';
 
 var test = require('mocha-cases');
@@ -43,7 +44,7 @@ var cases = [{
 		{}, [], undefined, null, {}, {}, {}, {}
 	]
 }, {
-	name: 'should promote and merge promotion values to it\'s parent',
+	name: "should promote and merge promotion values to it's parent",
 	value: {
 		values: {
 			development: {
@@ -73,7 +74,7 @@ var cases = [{
 		}
 	}
 }, {
-	name: 'should overwrite parent\'s values',
+	name: "should overwrite parent's values",
 	value: {
 		values: {
 			src: 'src',
