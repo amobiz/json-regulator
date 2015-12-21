@@ -24,8 +24,7 @@ function regulate(anyValues, anyPromotions, anyEliminations) {
 
 		function __promote(value, key, result) {
 			if (includes(promotions, key) && isObject(value)) {
-				assign(result, _regulate(value));
-				return true;
+				return assign(result, _regulate(value));
 			}
 		}
 	}
@@ -33,8 +32,10 @@ function regulate(anyValues, anyPromotions, anyEliminations) {
 	function _eliminate(values) {
 		return _each(values, __eliminate);
 
-		function __eliminate(value, key) {
-			return includes(eliminations, key);
+		function __eliminate(value, key, result) {
+			if (includes(eliminations, key)) {
+				return result;
+			}
 		}
 	}
 
@@ -45,10 +46,7 @@ function regulate(anyValues, anyPromotions, anyEliminations) {
 			var value;
 
 			value = values[key];
-			if (!fn(value, key, result)) {
-				(result[key] = _regulate(value));
-			}
-			return result;
+			return fn(value, key, result) || (result[key] = _regulate(value), result);
 		}
 	}
 }
