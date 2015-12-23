@@ -181,6 +181,10 @@ $ npm test
 
 ## Change Log
 
+* 2015/12/24 - 0.1.10
+
+	* NPM: Update npm settings.
+
 * 2015/12/18 - 0.1.9
 
     * Feature: also process objects inside array values recursively.
