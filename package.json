@@ -1,6 +1,6 @@
 {
   "name": "json-regulator",
-  "version": "0.1.10",
+  "version": "0.1.12",
   "description": "Manages conditional configurations by promoting and/or eliminating specific keys of a JSON value object.",
   "main": "index.js",
   "scripts": {
@@ -16,10 +16,10 @@
     "json regulator",
     "assign",
     "assign deep",
-	"conditional",
+    "conditional",
     "deep",
-	"gulp",
-	"gulp friendly",
+    "gulp",
+    "gulp friendly",
     "regulate",
     "regulator",
     "property",
@@ -41,6 +41,7 @@
     "mocha-cases": "^0.1.5"
   },
   "dependencies": {
+    "defaults-deep": "^0.2.3",
     "mixin-deep": "^1.1.3"
   }
 }

@@ -8,7 +8,7 @@ npm install json-regulator
 
 ## API
 
-### `regulate(values, promotions, eliminations)`
+### `regulate(values, promotions, eliminations, options)`
 For given JSON value object `values`, returns a new JSON value object, that promotes keys in `promotions` array one level up, and eliminats keys in both `promotions` and `eliminations` arrays.
 #### Context
 Don't care.
@@ -19,6 +19,9 @@ The JSON value object needs to regulate.
 Key or array of keys to promote.
 ##### `eliminations`
 Key or array of keys to eliminate.
+##### `options`
+###### `options.overwrite`
+Overwrite existing values or not. Default is true.
 #### Returns
 A new regulated JSON value object.
 #### Example
@@ -181,9 +184,13 @@ $ npm test
 
 ## Change Log
 
+* 2016/01/02 - 0.1.11
+
+    * Feature: add "overwrite" option.
+
 * 2015/12/24 - 0.1.10
 
-	* NPM: Update npm settings.
+    * NPM: Update npm settings.
 
 * 2015/12/18 - 0.1.9
 
@@ -196,7 +203,7 @@ $ npm test
     * First release.
 
 ## Related
- * [json-normalizer](https://www.npmjs.com/package/json-normalizer)
+ * [json-normalizer](https://github.com/amobiz/json-normalizer)
 
 ## License
 MIT
