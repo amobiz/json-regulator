@@ -10,9 +10,19 @@ function regulate(anyValues, anyPromotions, anyEliminations, optionalOptions) {
 
 	promotions = _arrayify(anyPromotions);
 	eliminations = _arrayify(anyEliminations);
-	options = defaults(optionalOptions, defaultOptions);
+	options = defaults(_options(), defaultOptions);
 	assign = options.overwrite ? mixin : defaults;
 	return _regulate(anyValues);
+
+	function _options() {
+		if (optionalOptions) {
+			return optionalOptions;
+		}
+		if (anyEliminations && typeof anyEliminations === 'object' && !Array.isArray(anyEliminations)) {
+			return anyEliminations;
+		}
+		return {};
+	}
 
 	function _regulate(values) {
 		if (Array.isArray(values)) {
