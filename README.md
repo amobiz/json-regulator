@@ -184,9 +184,10 @@ $ npm test
 
 ## Change Log
 
-* 2016/01/02 - 0.1.13
+* 2016/01/02 - 0.1.14
 
     * Feature: add "overwrite" option.
+    * Bug Fix: process normal properies before promotion properties to ensure overwrite option.
 
 * 2015/12/24 - 0.1.10
 

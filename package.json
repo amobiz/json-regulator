@@ -1,6 +1,6 @@
 {
   "name": "json-regulator",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "description": "Manages conditional configurations by promoting and/or eliminating specific keys of a JSON value object.",
   "main": "index.js",
   "scripts": {
