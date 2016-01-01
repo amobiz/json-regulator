@@ -58,6 +58,9 @@ var cases = [{
 				settings: {
 					expose: 'regulator'
 				}
+			},
+			options: {
+				silent: true
 			}
 		},
 		promotions: ['development', 'dev'],
@@ -67,6 +70,7 @@ var cases = [{
 		src: 'src',
 		dest: 'dist',
 		options: {
+			silent: true,
 			sourcemap: false
 		},
 		settings: {

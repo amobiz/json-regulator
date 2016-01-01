@@ -8,8 +8,8 @@ var defaultOptions = { overwrite: true };
 function regulate(anyValues, anyPromotions, anyEliminations, optionalOptions) {
 	var eliminations, promotions, options, assign;
 
-	promotions = _arrayify(anyPromotions);
-	eliminations = _arrayify(anyEliminations);
+	promotions = _hashify(anyPromotions);
+	eliminations = _hashify(anyEliminations);
 	options = defaults(_options(), defaultOptions);
 	assign = options.overwrite ? mixin : defaults;
 	return _regulate(anyValues);
@@ -29,51 +29,51 @@ function regulate(anyValues, anyPromotions, anyEliminations, optionalOptions) {
 			return values.map(_regulate);
 		}
 		if (isObject(values)) {
-			return _eliminate(_promote(values));
+			return _object(values);
 		}
 		return values;
 	}
 
-	function _promote(values) {
-		return _each(values, __promote);
+	function _object(values) {
+		var keys, result;
 
-		function __promote(value, key, result) {
-			if (includes(promotions, key) && isObject(value)) {
-				return assign(result, _regulate(value));
-			}
+		// process normal properies before promotion properties to ensure overwrite option.
+		keys = sort(Object.keys(values), promotions, eliminations);
+		result = keys.n.reduce(_normal, {});
+		result = keys.p.reduce(_promote, result);
+		return result;
+
+		function _normal(ret, key) {
+			ret[key] = _regulate(values[key]);
+			return ret;
 		}
-	}
 
-	function _eliminate(values) {
-		return _each(values, __eliminate);
-
-		function __eliminate(value, key, result) {
-			if (includes(eliminations, key)) {
-				return result;
-			}
-		}
-	}
-
-	function _each(values, fn) {
-		return Object.keys(values).reduce(_property, {});
-
-		function _property(result, key) {
+		function _promote(ret, key) {
 			var value;
 
 			value = values[key];
-			return fn(value, key, result) || (result[key] = _regulate(value), result);
+			if (isObject(value)) {
+				return assign(ret, _regulate(value));
+			}
+			result[key] = value;
+			return result;
 		}
 	}
 }
 
-function _arrayify(value) {
+function _hashify(value) {
+	var result;
+
+	result = {};
 	if (Array.isArray(value)) {
-		return value;
+		result = value.reduce(function (ret, key) {
+			ret[key] = true;
+			return ret;
+		}, result);
+	} else if (isString(value)) {
+		result[value] = true;
 	}
-	if (isString(value)) {
-		return [value];
-	}
-	return [];
+	return result;
 }
 
 function isString(value) {
@@ -84,8 +84,22 @@ function isObject(value) {
 	return !!value && typeof value === 'object' && !Array.isArray(value);
 }
 
-function includes(array, value) {
-	return array.indexOf(value) !== -1;
+function sort(keys, promotions, eliminations) {
+	var i, n, key, ret;
+
+	ret = {
+		p: [],
+		n: []
+	};
+	for (i = 0, n = keys.length; i < n; ++i) {
+		key = keys[i];
+		if (promotions[key]) {
+			ret.p.push(key);
+		} else if (!eliminations[key]) {
+			ret.n.push(key);
+		}
+	}
+	return ret;
 }
 
 module.exports = regulate;
