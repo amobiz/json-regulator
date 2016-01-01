@@ -74,7 +74,7 @@ var cases = [{
 		}
 	}
 }, {
-	name: "should overwrite parent's values",
+	name: "should overwrite parent's values with default options",
 	value: {
 		values: {
 			src: 'src',
@@ -111,7 +111,47 @@ var cases = [{
 		}
 	}
 }, {
-	name: 'should later promotion values overwrite previous one',
+	name: "should not overwrite parent's values with options.overwrite set to false",
+	value: {
+		values: {
+			src: 'src',
+			dest: 'dist',
+			options: {
+				debug: false
+			},
+			development: {
+				src: 'app',
+				options: {
+					debug: true,
+					sourcemap: true
+				}
+			},
+			dev: {
+				dest: 'build',
+				settings: {
+					expose: 'regulator'
+				}
+			}
+		},
+		promotions: ['development', 'dev'],
+		eliminations: [],
+		options: {
+			overwrite: false
+		}
+	},
+	expected: {
+		src: 'src',
+		dest: 'dist',
+		options: {
+			debug: false,
+			sourcemap: true
+		},
+		settings: {
+			expose: 'regulator'
+		}
+	}
+}, {
+	name: 'should later promotion values overwrite previous one with default options',
 	value: {
 		values: {
 			development: {
@@ -139,6 +179,41 @@ var cases = [{
 		dest: 'dist',
 		options: {
 			override: true
+		},
+		settings: {
+			expose: 'regulator'
+		}
+	}
+}, {
+	name: 'should later promotion values not overwrite previous one with options.overwrite set to false',
+	value: {
+		values: {
+			development: {
+				src: 'src',
+				options: {
+					override: false
+				}
+			},
+			dev: {
+				src: 'app',
+				dest: 'dist',
+				options: {
+					override: true
+				},
+				settings: {
+					expose: 'regulator'
+				}
+			}
+		},
+		promotions: ['development', 'dev'],
+		eliminations: [],
+		options: { overwrite: false }
+	},
+	expected: {
+		src: 'src',
+		dest: 'dist',
+		options: {
+			override: false
 		},
 		settings: {
 			expose: 'regulator'
@@ -406,6 +481,6 @@ var cases = [{
 
 describe('regulate()', function () {
 	test(cases, function (value) {
-		return regulate(value.values, value.promotions, value.eliminations);
+		return regulate(value.values, value.promotions, value.eliminations, value.options);
 	});
 });

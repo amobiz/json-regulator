@@ -1,12 +1,17 @@
 'use strict';
 
-var assign = require('mixin-deep');
+var mixin = require('mixin-deep');
+var defaults = require('defaults-deep');
 
-function regulate(anyValues, anyPromotions, anyEliminations) {
-	var eliminations, promotions;
+var defaultOptions = { overwrite: true };
+
+function regulate(anyValues, anyPromotions, anyEliminations, optionalOptions) {
+	var eliminations, promotions, options, assign;
 
 	promotions = _arrayify(anyPromotions);
 	eliminations = _arrayify(anyEliminations);
+	options = defaults(optionalOptions, defaultOptions);
+	assign = options.overwrite ? mixin : defaults;
 	return _regulate(anyValues);
 
 	function _regulate(values) {
