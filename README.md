@@ -18,10 +18,10 @@ The JSON value object needs to regulate.
 ##### `promotions`
 Key or array of keys to promote.
 ##### `eliminations`
-Key or array of keys to eliminate.
+Optional. Key or array of keys to eliminate.
 ##### `options`
 ###### `options.overwrite`
-Overwrite existing values or not. Default is true.
+Optional. Overwrite existing values or not. Default is true.
 #### Returns
 A new regulated JSON value object.
 #### Example
@@ -184,7 +184,7 @@ $ npm test
 
 ## Change Log
 
-* 2016/01/02 - 0.1.11
+* 2016/01/02 - 0.1.13
 
     * Feature: add "overwrite" option.
 
