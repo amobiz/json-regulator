@@ -1,6 +1,11 @@
 # json-regulator
 Manages conditional configurations by promoting and/or eliminating specific keys of a JSON value object.
 
+[![MIT](http://img.shields.io/badge/license-MIT-brightgreen.svg)](https://github.com/amobiz/json-regulator/blob/master/LICENSE) [![npm version](https://badge.fury.io/js/json-regulator.svg)](http://badge.fury.io/js/json-regulator) [![David Dependency Badge](https://david-dm.org/amobiz/json-regulator.svg)](https://david-dm.org/amobiz/json-regulator)
+
+[![NPM](https://nodei.co/npm/json-regulator.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/json-regulator.png?downloads=true&downloadRank=true&stars=true) [![NPM](https://nodei.co/npm-dl/json-regulator.png?months=6&height=3)](https://nodei.co/npm/json-regulator/)
+
+
 ## Install
 ``` bash
 npm install json-regulator
