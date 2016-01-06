@@ -42,6 +42,7 @@
   },
   "dependencies": {
     "defaults-deep": "^0.2.3",
-    "mixin-deep": "^1.1.3"
+    "mixin-deep": "^1.1.3",
+    "mocha-cases": "^0.1.8"
   }
 }
