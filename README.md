@@ -197,8 +197,8 @@ $ npm test
 
 * 2016/01/02 - 0.1.14
 
-    * Feature: add "overwrite" option.
-    * Bug Fix: process normal properies before promotion properties to ensure overwrite option.
+    * Feature: add `overwrite` option.
+    * Bug Fix: process normal properies before `promotions` properties to ensure `overwrite` option.
 
 * 2015/12/24 - 0.1.10
 
@@ -207,8 +207,8 @@ $ npm test
 * 2015/12/18 - 0.1.9
 
     * Feature: also process objects inside array values recursively.
-    * Feature: allow type of `promotions` and `eliminations` argument to be `string`, instead of array of strings.
-    * Enhance: returns a new JSON value object, rather then modifying it directly.
+    * Feature: parameter `promotions` and `eliminations` now can be `string` or `array` of strings.
+    * Enhance: returns a new JSON value object, the input values is immutable now.
 
 * 2015/12/15 - 0.1.0
 
