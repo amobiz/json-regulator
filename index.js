@@ -5,46 +5,58 @@ var defaults = require('defaults-deep');
 
 var defaultOptions = { overwrite: true };
 
-function regulate(anyValues, anyPromotions, anyEliminations, optionalOptions) {
-	var eliminations, promotions, options, assign;
+function regulate(anyValues, anyPromotions, anyEliminations, anyImmutables, optionalOptions) {
+	var assign, eliminations, immutables, options, promotions;
+
+	if (anyEliminations && !isList(anyEliminations)) {
+		return regulate(anyValues, anyPromotions, [], [], anyEliminations);
+	} else if (anyImmutables && !isList(anyImmutables)) {
+		return regulate(anyValues, anyPromotions, anyEliminations, [], anyImmutables);
+	}
 
 	promotions = _hashify(anyPromotions);
 	eliminations = _hashify(anyEliminations);
+	immutables = _hashify(anyImmutables);
 	options = defaults(_options(), defaultOptions);
 	assign = options.overwrite ? mixin : defaults;
 	return _regulate(anyValues);
 
 	function _options() {
-		if (optionalOptions) {
+		if (isObject(optionalOptions)) {
 			return optionalOptions;
-		}
-		if (anyEliminations && typeof anyEliminations === 'object' && !Array.isArray(anyEliminations)) {
-			return anyEliminations;
 		}
 		return {};
 	}
 
 	function _regulate(values) {
+		return _array(values) || _object({}, values) || values;
+	}
+
+	function _array(values) {
 		if (Array.isArray(values)) {
 			return values.map(_regulate);
 		}
-		if (isObject(values)) {
-			return _object(values);
-		}
-		return values;
 	}
 
-	function _object(values) {
-		var keys, result;
+	function _object(result, values) {
+		var keys;
 
-		// process normal properies before promotion properties to ensure overwrite option.
-		keys = sort(Object.keys(values), promotions, eliminations);
-		result = keys.n.reduce(_normal, {});
-		result = keys.p.reduce(_promote, result);
-		return result;
+		if (isObject(values)) {
+			// process normal properies before promotion properties to ensure overwrite option.
+			keys = sort(Object.keys(values), promotions, eliminations);
+			result = keys.n.reduce(_normal, result);
+			result = keys.p.reduce(_promote, result);
+			return result;
+		}
 
 		function _normal(ret, key) {
-			ret[key] = _regulate(values[key]);
+			if (immutables[key]) {
+				if (!(key in ret)) {
+					ret[key] = values[key];
+				}
+			} else {
+				_assign(ret, key, _regulate(values[key]));
+			}
 			return ret;
 		}
 
@@ -52,12 +64,15 @@ function regulate(anyValues, anyPromotions, anyEliminations, optionalOptions) {
 			var value;
 
 			value = values[key];
-			if (isObject(value)) {
-				return assign(ret, _regulate(value));
-			}
-			result[key] = value;
-			return result;
+			return _object(ret, value) || _assign(ret, key, _array(value) || value);
 		}
+	}
+
+	function _assign(ret, key, value) {
+		var tmp = {};
+
+		tmp[key] = value;
+		return assign(ret, tmp);
 	}
 }
 
@@ -74,6 +89,10 @@ function _hashify(value) {
 		result[value] = true;
 	}
 	return result;
+}
+
+function isList(value) {
+	return typeof value === 'string' || Array.isArray(value);
 }
 
 function isString(value) {

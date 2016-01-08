@@ -13,7 +13,7 @@ npm install json-regulator
 
 ## API
 
-### `regulate(values, promotions, eliminations, options)`
+### `regulate(values, promotions, eliminations, immutables, options)`
 For given JSON value object `values`, returns a new JSON value object, that promotes keys in `promotions` array one level up, and eliminats keys in both `promotions` and `eliminations` arrays.
 #### Context
 Don't care.
@@ -24,6 +24,8 @@ The JSON value object needs to regulate.
 Key or array of keys to promote.
 ##### `eliminations`
 Optional. Key or array of keys to eliminate.
+##### `immutables`
+Optional. Key or array of keys that should never mutate.
 ##### `options`
 ###### `options.overwrite`
 Optional. Overwrite existing values or not. Default is true.
@@ -188,6 +190,10 @@ $ npm test
 ```
 
 ## Change Log
+
+* 2016/01/09 - 0.1.15
+
+    * Feature: add `immutables` parameter. See test for examples.
 
 * 2016/01/02 - 0.1.14
 
