@@ -1,6 +1,6 @@
 {
   "name": "json-regulator",
-  "version": "0.1.15",
+  "version": "0.1.16",
   "description": "Manages conditional configurations by promoting and/or eliminating specific keys of a JSON value object.",
   "main": "index.js",
   "scripts": {
@@ -12,22 +12,19 @@
   },
   "keywords": [
     "json",
-    "json regulate",
     "json regulator",
     "assign",
     "assign deep",
     "conditional",
+	"conditional configuration",
     "deep",
-    "gulp",
-    "gulp friendly",
+    "gulpfriendly",
     "regulate",
     "regulator",
     "property",
-    "properties",
     "adjust",
     "adjustment",
-    "configuration",
-    "configurations"
+    "configuration"
   ],
   "author": "Amobiz",
   "license": "MIT",
@@ -36,8 +33,8 @@
   },
   "homepage": "https://github.com/amobiz/json-regulator#readme",
   "devDependencies": {
-    "chai": "^3.4.1",
-    "mocha": "^2.3.4",
+    "chai": "^3.5.0",
+    "mocha": "^2.4.5",
     "mocha-cases": "^0.1.5"
   },
   "dependencies": {

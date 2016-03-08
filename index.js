@@ -22,7 +22,7 @@ function regulate(anyValues, anyPromotions, anyEliminations, anyImmutables, opti
 	return _regulate(anyValues);
 
 	function _options() {
-		if (isObject(optionalOptions)) {
+		if (isPlainObject(optionalOptions)) {
 			return optionalOptions;
 		}
 		return {};
@@ -41,7 +41,7 @@ function regulate(anyValues, anyPromotions, anyEliminations, anyImmutables, opti
 	function _object(result, values) {
 		var keys;
 
-		if (isObject(values)) {
+		if (isPlainObject(values)) {
 			// process normal properies before promotion properties to ensure overwrite option.
 			keys = sort(Object.keys(values), promotions, eliminations);
 			result = keys.n.reduce(_normal, result);
@@ -99,8 +99,11 @@ function isString(value) {
 	return typeof value === 'string';
 }
 
-function isObject(value) {
-	return !!value && typeof value === 'object' && !Array.isArray(value);
+function isPlainObject(value) {
+	if (value === null || typeof value !== 'object') {
+		return false;
+	}
+	return Object.getPrototypeOf(value) === Object.prototype;
 }
 
 function sort(keys, promotions, eliminations) {

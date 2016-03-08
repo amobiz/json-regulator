@@ -189,36 +189,11 @@ $ gulp --dev scripts
 $ npm test
 ```
 
-## Change Log
-
-* 2016/01/09 - 0.1.15
-
-    * Feature: add `immutables` parameter. See test for examples.
-
-* 2016/01/02 - 0.1.14
-
-    * Feature: add `overwrite` option.
-    * Bug Fix: process normal properies before `promotions` properties to ensure `overwrite` option.
-
-* 2015/12/24 - 0.1.10
-
-    * NPM: Update npm settings.
-
-* 2015/12/18 - 0.1.9
-
-    * Feature: also process objects inside array values recursively.
-    * Feature: parameter `promotions` and `eliminations` now can be `string` or `array` of strings.
-    * Enhance: returns a new JSON value object, the input values is immutable now.
-
-* 2015/12/15 - 0.1.0
-
-    * First release.
-
 ## Related
- * [json-normalizer](https://github.com/amobiz/json-normalizer)
+* [json-normalizer](https://github.com/amobiz/json-normalizer)
 
 ## License
-MIT
+[MIT](https://opensource.org/licenses/MIT)
 
 ## Author
 [Amobiz](https://github.com/amobiz)

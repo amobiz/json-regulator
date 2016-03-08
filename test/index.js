@@ -5,6 +5,8 @@ var test = require('mocha-cases');
 
 var regulate = require('../');
 
+function Ctor() {}
+
 var cases = {
 	robustness: [{
 		name: 'should accept empty value and return as is: {value.values}, promotions: {value.promotions} and eliminations: {value.eliminations}',
@@ -51,6 +53,48 @@ var cases = {
 		}],
 		expected: [
 			{}, [], undefined, null, {}, {}, {}, {}
+		]
+	}],
+	'plain-object-only': [{
+		name: 'should only process plain object: {value.values}',
+		values: [{
+			values: Ctor,
+			promotions: 'dev'
+		}, {
+			values: [],
+			promotions: 'dev'
+		}, {
+			values: true,
+			promotions: 'dev'
+		}, {
+			values: 'abcde',
+			promotions: 'dev'
+		}, {
+			values: 12345,
+			promotions: 'dev'
+		}, {
+			values: new RegExp(),
+			promotions: 'dev'
+		}, {
+			values: { test: /\.css$/, loader: 'style' },
+			promotions: 'dev'
+		}, {
+			values: Object.create({}),
+			promotions: 'dev'
+		}, {
+			values: new Ctor(),
+			promotions: 'dev'
+		}],
+		expected: [
+			Ctor,
+			[],
+			true,
+			'abcde',
+			12345,
+			new RegExp(),
+			{ test: /\.css$/, loader: 'style' },
+			Object.create({}),
+			new Ctor()
 		]
 	}],
 	promotions: [{
