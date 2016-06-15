@@ -5,7 +5,7 @@ var test = require('mocha-cases');
 
 var regulate = require('../');
 
-function Ctor() {}
+var Ctor = function () {};
 
 var cases = {
 	robustness: [{

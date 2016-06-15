@@ -29,7 +29,7 @@ function regulate(anyValues, anyPromotions, anyEliminations, anyImmutables, opti
 	}
 
 	function _regulate(values) {
-		return _array(values) || _object({}, values) || values;
+		return _array(values) || _object(values, {}) || values;
 	}
 
 	function _array(values) {
@@ -38,13 +38,13 @@ function regulate(anyValues, anyPromotions, anyEliminations, anyImmutables, opti
 		}
 	}
 
-	function _object(result, values) {
-		var keys;
+	function _object(values, accumulator) {
+		var keys, result;
 
 		if (isPlainObject(values)) {
 			// process normal properies before promotion properties to ensure overwrite option.
 			keys = sort(Object.keys(values), promotions, eliminations);
-			result = keys.n.reduce(_normal, result);
+			result = keys.n.reduce(_normal, accumulator);
 			result = keys.p.reduce(_promote, result);
 			return result;
 		}
@@ -64,7 +64,7 @@ function regulate(anyValues, anyPromotions, anyEliminations, anyImmutables, opti
 			var value;
 
 			value = values[key];
-			return _object(ret, value) || _assign(ret, key, _array(value) || value);
+			return _object(value, ret) || _assign(ret, key, _array(value) || value);
 		}
 	}
 
